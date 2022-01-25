@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>videojs-playlist Demo</title>
+  <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+  <style>
+    button {
+      margin: 1em;
+      width: 10em;
+    }
+
+    .options {
+      margin: 1em;
+    }
+
+    .autoadvance-group label {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <video class="video-js vjs-default-skin" controls width="640px" height="360px"></video>
+  <div class="options">
+  </div>
+  <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+  <script src="videojs-playlist.js"></script>
+  <script>
+    var videoList = [{
+      sources: [{
+        src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
+        type: 'video/mp4'
+      }],
+      poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+    }, {
+      sources: [{
+        src: 'http://vjs.zencdn.net/v/oceans.mp4',
+        type: 'video/mp4'
+      }],
+      poster: 'http://www.videojs.com/img/poster.jpg'
+    }, {
+      sources: [{
+        src: 'http://media.w3.org/2010/05/video/movie_300.mp4',
+        type: 'video/mp4'
+      }],
+      poster: 'http://media.w3.org/2010/05/video/poster.png'
+    }];
+
+    var player = videojs(document.querySelector('video'), {
+      inactivityTimeout: 0,
+    });
+
+
+    player.on([
+      'duringplaylistchange',
+      'playlistchange',
+      'beforeplaylistitem',
+      'playlistitem',
+      'playlistsorted'
+    ], function (e) {
+      videojs.log('player saw "' + e.type + '"');
+    });
+
+    player.playlist(videoList);
+
+    player.playlist.autoadvance(0)
+
+  </script>
+</body>
+
+</html>
